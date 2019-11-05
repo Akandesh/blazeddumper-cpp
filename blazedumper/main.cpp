@@ -9,6 +9,7 @@
 #include "modules.hpp"
 #include <iostream>
 #include "hpp.h"
+#include "csharp.h"
 
 #define CLIENT_MODULE _T("client_panorama.dll")
 
@@ -44,7 +45,7 @@ int main( ) {
 		modules.emplace( CLIENT_MODULE, foreign_module{ CLIENT_MODULE } );
 		for ( auto& sig : sigs ) {
 			if ( modules.find( sig.second.module ) == modules.end( ) ) {
-				modules.emplace( sig.second.module, foreign_module{ sig.second.module.c_str() } );
+				modules.emplace( sig.second.module, foreign_module{ sig.second.module.c_str( ) } );
 			}
 		}
 		auto d = modules.at( CLIENT_MODULE );
@@ -74,7 +75,9 @@ int main( ) {
 		std::ofstream o( "dump\\csgo.json" );
 		o << std::setw( 4 ) << j << std::endl;
 
-		auto kk = hpp( j ); kk.dump( );
+		hpp( j ).dump( );
+		csharp( j ).dump( );
+
 		std::cout << "Success!" << std::endl;
 		return EXIT_SUCCESS;
 	} catch ( const std::runtime_error& error ) {

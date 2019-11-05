@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="csharp.cpp" />
     <ClCompile Include="hpp.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modules.cpp" />
@@ -137,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="config.hpp" />
+    <ClInclude Include="csharp.h" />
     <ClInclude Include="hpp.h" />
     <ClInclude Include="modules.hpp" />
     <ClInclude Include="netvar.hpp" />

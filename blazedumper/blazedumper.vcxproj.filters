@@ -9,6 +9,9 @@
       <Filter>output</Filter>
     </ClCompile>
     <ClCompile Include="utils.cpp" />
+    <ClCompile Include="csharp.cpp">
+      <Filter>output</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="valve.hpp" />
@@ -23,6 +26,9 @@
       <Filter>output</Filter>
     </ClInclude>
     <ClInclude Include="utils.h" />
+    <ClInclude Include="csharp.h">
+      <Filter>output</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="config.json" />

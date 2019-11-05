@@ -1,8 +1,6 @@
-#pragma once
 #include "utils.h"
 #include <iomanip>
 #include <sstream>
-
 
 std::string utils::get_current_time()
 {
