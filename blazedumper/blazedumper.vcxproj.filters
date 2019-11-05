@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="netvar.cpp" />
+    <ClCompile Include="modules.cpp" />
+    <ClCompile Include="config.cpp" />
+    <ClCompile Include="hpp.cpp">
+      <Filter>output</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="valve.hpp" />
+    <ClInclude Include="netvar.hpp" />
+    <ClInclude Include="nlohmann\json.hpp" />
+    <ClInclude Include="modules.hpp" />
+    <ClInclude Include="config.hpp" />
+    <ClInclude Include="hpp.h">
+      <Filter>output</Filter>
+    </ClInclude>
+    <ClInclude Include="output.h">
+      <Filter>output</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="output">
+      <UniqueIdentifier>{c5b0b8ec-6ae3-4ee7-9521-860efa1837a3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
