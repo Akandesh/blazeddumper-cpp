@@ -11,7 +11,7 @@
 #include "hpp.h"
 #include "csharp.h"
 
-#define CLIENT_MODULE _T("client_panorama.dll")
+#define CLIENT_MODULE _T("client.dll")
 
 int main( ) {
 	auto sigs = std::unordered_map<std::string, settings::signature>{};
@@ -38,8 +38,14 @@ int main( ) {
 	}
 
 	try {
+#ifndef _DEBUG
 		AddDllDirectory( L"C:\\Users\\Administrator\\Desktop\\Blazedumper\\csgo_client\\csgo\\bin\\" );
 		AddDllDirectory( L"C:\\Users\\Administrator\\Desktop\\Blazedumper\\csgo_client\\bin\\" );
+#endif
+#ifdef _DEBUG
+		AddDllDirectory( L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\bin\\" );
+		AddDllDirectory( L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\bin" );
+#endif
 
 		std::unordered_map<std::string, foreign_module> modules;
 		modules.emplace( CLIENT_MODULE, foreign_module{ CLIENT_MODULE } );
@@ -57,6 +63,9 @@ int main( ) {
 
 		// thx hazedumper
 		const auto result = d.find_pattern( "\xA1\x00\x00\x00\x00\xC3\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xCC\xA1\x00\x00\x00\x00\xB9", "x????xxxxxxxxxxxx????x" );
+		if ( !result ) {
+			throw std::runtime_error( "Classes list not found." );
+		}
 		// mov eax, g_pClientClassHead	
 		const auto g_pClientClassHead = **( ClientClass*** ) ( result + 1u );
 
@@ -80,9 +89,9 @@ int main( ) {
 
 		std::cout << "Success!" << std::endl;
 		return EXIT_SUCCESS;
-	} catch ( const std::runtime_error& error ) {
+		} catch ( const std::runtime_error& error ) {
 
-		_tprintf( _T( "Failed to initialize dumper: %s\n" ), error.what( ) );
-		return EXIT_FAILURE;
+			_tprintf( _T( "Failed to initialize dumper: %s\n" ), error.what( ) );
+			return EXIT_FAILURE;
+		}
 	}
-}

@@ -1,4 +1,10 @@
-Debug/
-Release/
-blazedumper/netvar_dump.txt
 .vs/
+blazedumper/netvar_dump.txt
+blazedumper/Debug/
+blazedumper/Release/csharp.obj
+blazedumper/Release/config.obj
+blazedumper/Release/
+blazedumper/x64/
+Debug/
+enc_temp_folder/
+Release/

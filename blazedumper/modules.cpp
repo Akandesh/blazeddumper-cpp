@@ -59,13 +59,17 @@ foreign_module::foreign_module( const TCHAR* mod ) {
 		}
 	}
 
-#ifdef _DEBUG
 	_tprintf( _T( "%s is loaded at 0x%p (size: 0x%lX)\n" ), mod, h_module, m_module_info.SizeOfImage );
-#endif
 }
 
 const std::uint8_t* foreign_module::find_pattern( const settings::signature& sig ) const {
 	auto result = reinterpret_cast< std::uint8_t* >( find_pattern( sig.pattern.c_str( ) ) );
+	if ( !result ) {
+		_tprintf( _T( "Did not find %s with sig %s\n" ), sig.name.c_str( ), sig.pattern.c_str( ) );
+		_tprintf( _T( "loaded at 0x%p (size: 0x%lX)\n" ), h_module, m_module_info.SizeOfImage );
+		Sleep( 10000 );
+		return result;
+	}
 
 	for ( auto&& offset : sig.offsets ) {
 		result = reinterpret_cast< std::uint8_t* >(
