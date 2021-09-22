@@ -85,7 +85,7 @@ int main( ) {
 
         for ( auto && netvar : nets ) {
             const auto offset = netvars.get_offset( netvar.table, netvar.prop ) + netvar.offset;
-            if ( !offset ) {
+            if ( !offset && netvar.name != "cs_gamerules_data" ) {
                 bad_dumps[ "netvars" ].emplace_back( netvar.name );
             }
             j[ "netvars" ][ netvar.name ] = offset;
@@ -123,7 +123,7 @@ void update_readme( std::unordered_map<std::string, std::vector<std::string>> & 
         std::string readme = slurp( instream );
         instream.close( );
 
-        std::regex updexp( R"((\#\#\#\sLast\sUpdate)(\s\w+))" );
+        std::regex updexp( R"((\#\#\#\sLast\sUpdate)(\s[\w :-]+))" );
         readme = std::regex_replace( readme, updexp, "$1 " + utils::get_current_time( ) );
 
         std::regex issueexp( R"((^\#\#\sIssues\n?)((?:.|\n)*)(\#\#\sCredits:))" );
