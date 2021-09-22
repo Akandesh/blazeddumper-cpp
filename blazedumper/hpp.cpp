@@ -42,8 +42,8 @@ void hpp::signatures()
 
 void hpp::timestamp()
 {
-	stream << "constexpr ::std::int64_t timestamp = " << 
-		std::chrono::system_clock::now( ).time_since_epoch( ).count( ) << std::endl; // hours since epoch
+	//stream << "constexpr ::std::int64_t timestamp = " << 
+	//	std::chrono::system_clock::now( ).time_since_epoch( ).count( ) << std::endl; // hours since epoch
 }
 
 

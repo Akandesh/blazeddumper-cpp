@@ -23,8 +23,8 @@ void csharp::header()
 
 void csharp::timestamp()
 {
-	stream << "    public const Int32 timestamp = " <<
-		std::chrono::system_clock::now( ).time_since_epoch( ).count( ) << std::endl; // hours since epoch
+	//stream << "    public const Int32 timestamp = " <<
+	//	std::chrono::system_clock::now( ).time_since_epoch( ).count( ) << std::endl; // hours since epoch
 }
 
 void csharp::netvars()
