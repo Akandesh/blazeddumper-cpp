@@ -62,12 +62,16 @@ foreign_module::foreign_module( const TCHAR* mod ) {
 	_tprintf( _T( "%s is loaded at 0x%p (size: 0x%lX)\n" ), mod, h_module, m_module_info.SizeOfImage );
 }
 
-const std::uint8_t* foreign_module::find_pattern( const settings::signature& sig ) const {
-	auto result = reinterpret_cast< std::uint8_t* >( find_pattern( sig.pattern.c_str( ) ) );
+
+
+const std::uint8_t* foreign_module::find_pattern( const settings::signature& sig ) {
+	auto result = find_pattern2( sig.alt_pattern, sig.mask );
 	if ( !result ) {
 		_tprintf( _T( "Did not find %s with sig %s\n" ), sig.name.c_str( ), sig.pattern.c_str( ) );
 		_tprintf( _T( "loaded at 0x%p (size: 0x%lX)\n" ), h_module, m_module_info.SizeOfImage );
-		Sleep( 10000 );
+		_tprintf( _T( "Trying alt function..\n" ), h_module, m_module_info.SizeOfImage );
+		Sleep( 1000 );
+		//result = reinterpret_cast< std::uint8_t * >(  );
 		return result;
 	}
 
@@ -88,6 +92,34 @@ const std::uint8_t* foreign_module::find_pattern( const settings::signature& sig
 	return result;
 }
 
+
+// so good !!
+std::uint8_t * foreign_module::find_pattern2( const std::vector<char>& pattern, const std::string & mask ) {
+	// src by birdd: https://www.unknowncheats.me/forum/c-and-c-/271496-pattern-match-super-supoer-fast.html#post2072470
+	const auto module = span{
+		static_cast< std::uint8_t * >( m_module_info.lpBaseOfDll ),
+		m_module_info.SizeOfImage
+	};
+
+	if (pattern.size() != mask.size() )
+		return 0;
+
+	std::deque<std::pair<char, char>> pattern_data;
+
+	// Compile pattern
+	for ( auto i = 0u; i < mask.size( ); i++ ) {
+		pattern_data.push_back( std::make_pair( pattern[ i ], mask[ i ] ) );
+	}
+
+	auto result = std::search( module.begin( ), module.end( ), pattern_data.begin( ), pattern_data.end( ),
+		[]( const char left, const std::pair<char, char> right ) -> bool {
+			return ( right.second == '?' || left == right.first );
+		} );
+
+	return ( result == module.end( ) ) ? nullptr : (std::uint8_t*)result.operator->( );
+}
+
+// bad !!
 std::uintptr_t foreign_module::find_pattern( const char* pattern ) const {
 	auto pat = pattern;
 	std::uintptr_t first_match = 0;

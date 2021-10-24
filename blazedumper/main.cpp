@@ -21,7 +21,8 @@ int main( ) {
     auto nets = std::vector<settings::netvar>{};
     auto bad_dumps = std::unordered_map<std::string, std::vector<std::string>>{};
 
-
+    wchar_t * c = (wchar_t*)malloc( MAX_PATH );
+    const auto t = _wgetcwd(c, MAX_PATH / sizeof(wchar_t));
     if ( auto stream = std::ifstream{ "config.json" }; stream.good( ) ) {
         auto config = json::parse( stream );
 
@@ -32,7 +33,8 @@ int main( ) {
         }
 
         for ( auto && signature_iter : config.at( "signatures" ) ) {
-            const auto signature = signature_iter.get<settings::signature>( );
+            auto signature = signature_iter.get<settings::signature>( );
+            utils::fix_signature( signature );
             sigs[ signature.name ] = signature;
         }
 
@@ -45,8 +47,7 @@ int main( ) {
 #ifndef _DEBUG
         AddDllDirectory( L"C:\\Users\\Administrator\\Desktop\\Blazedumper\\csgo_client\\csgo\\bin\\" );
         AddDllDirectory( L"C:\\Users\\Administrator\\Desktop\\Blazedumper\\csgo_client\\bin\\" );
-#endif
-#ifdef _DEBUG
+#else
         AddDllDirectory( L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\bin\\" );
         AddDllDirectory( L"C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\bin" );
 #endif

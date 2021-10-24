@@ -21,6 +21,10 @@ namespace settings {
 		bool relative;
 		std::string module;
 		std::vector<int> offsets;
+
+		// added to support alternative sigscan 
+		std::string mask;
+		std::vector<char> alt_pattern;
 	};
 
 	void to_json(json& j, const netvar& n);
